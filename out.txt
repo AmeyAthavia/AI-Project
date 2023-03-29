@@ -1,0 +1,3 @@
+New board is: WWWxxxxWWWWxBBBxxBWBxB
+Positions Evaluated: 441
+MiniMax evaluation: 0
