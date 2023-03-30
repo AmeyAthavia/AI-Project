@@ -214,11 +214,12 @@ class MiniMaxOpening:
 
     def static_estm(self, board):
         score = 0
+        w, b = self.count(board)
         for i in range(len(board)):
             if board[i] == 'W':
                 score += self.closemill(i, board)
                 score += self.neighbours(i, board)
-                w, b = self.count(board)
+
                 if w > b:
                     score += w
                 if w < b:
