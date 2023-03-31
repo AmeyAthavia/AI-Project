@@ -212,28 +212,6 @@ class MiniMaxOpening:
                 b_count += 1
         return w_count - b_count
 
-    def add_W(self, board):
-        temp_pos = {}
-
-        for i in range(len(board)):
-            score = 0
-            if board[i] == 'x':
-                temp = board.copy()
-                temp[i] = 'W'
-                score += self.closemill(i, temp)
-                score += self.neighbours(i, temp)
-
-                temp[i] = 'B'
-                score += self.closemill(i, temp)
-
-                temp[i] = 'W'
-                score += self.count(board)
-
-                new_s = ''.join(x for x in temp)
-                temp_pos[new_s] = score
-
-        return temp_pos
-
     def generateADD(self, board):
         pos = []
         for i in range(len(board)):
@@ -289,22 +267,16 @@ class MiniMaxOpening:
             depth -= 1
             possible_pos = self.generateADD(board)
 
-            '''rint('Possible moves for white are:\n ')
-            for i in range(len(possible_pos)):
-                print(''.join(x for x in possible_pos[i]))'''
-
             val = float('-inf')
             max_board = [None] * 50
             for i in range(len(possible_pos)):
                 print('Board')
                 min_board = self.min_max(possible_pos[i], depth)
-                print('max_min min board: '+''.join(x for x in min_board))
                 cnt = self.count(min_board)
                 if val < cnt:
                     val = cnt
                     self.minimax_est = val
                     max_board = possible_pos[i]
-            print('max_min max board: '+''.join(x for x in max_board))
             return max_board
         elif depth == 0:
             self.pos_eval += 1
@@ -316,20 +288,14 @@ class MiniMaxOpening:
             depth -= 1
             children = self.generateBlackMove(board)
 
-            '''print('Possible moves for white are:\n ')
-            for i in range(len(children)):
-                print(''.join(x for x in children[i]))'''
-
             val = float('inf')
             min_board = [None] * 50
             for i in range(len(children)):
                 max_board = self.max_min(children[i], depth)
-                print('min_max max board: '+''.join(x for x in max_board))
                 cnt = self.count(max_board)
                 if val > cnt:
                     val = cnt
                     min_board = children[i]
-            print('min_max min board: '+''.join(x for x in min_board))
             return min_board
         elif depth == 0:
             self.pos_eval += 1
@@ -345,7 +311,6 @@ if __name__ == '__main__':
     with open(inputfile, 'r') as f1:
         s = f1.read()
         board = list(s)
-        print(len(board))
         obj = MiniMaxOpening()
         new_moves = obj.max_min(board, depth)
         new_s = ''.join(i for i in new_moves)
@@ -354,8 +319,8 @@ if __name__ == '__main__':
         print('MiniMax evaluation: '+str(obj.minimax_est))
 
         with open(outputFile, 'w') as f2:
-            f2.write('New board is: '+new_s+'\n')
-            f2.write('Positions Evaluated: '+str(obj.pos_eval)+'\n')
-            f2.write('MiniMax evaluation: '+str(obj.minimax_est)+'\n')
+            f2.write(new_s)
+            # f2.write('Positions Evaluated: '+str(obj.pos_eval)+'\n')
+            # f2.write('MiniMax evaluation: '+str(obj.minimax_est)+'\n')
 
 

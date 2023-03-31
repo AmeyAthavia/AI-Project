@@ -171,7 +171,7 @@ class MiniMaxGame:
 
         if loc == 17:
             # if board[16] == c or board[18] == c or board[14] == c or board[20] == c:  # 17
-            return [15, 18, 14, 20]
+            return [16, 18, 14, 20]
 
         if loc == 18:
             # if board[15] == c or board[17] == c or board[21] == c or board[11] == c:  # 18
@@ -238,7 +238,6 @@ class MiniMaxGame:
                     continue
                 if temp2[j] == 'B':
                     temp2[j] = 'W'
-            # print(temp)
             black_move_list.append(temp2)
         return black_move_list
 
@@ -310,21 +309,15 @@ class MiniMaxGame:
             depth -= 1
             possible_pos = self.midgame_moves(board)
 
-            '''rint('Possible moves for white are:\n ')
-            for i in range(len(possible_pos)):
-                print(''.join(x for x in possible_pos[i]))'''
-
             val = float('-inf')
             max_board = [None] * 50
             for i in range(len(possible_pos)):
                 min_board = self.min_max(possible_pos[i], depth)
-                print('max_min min board: ' + ''.join(x for x in min_board))
                 cnt = self.static_estm(min_board)
                 if val < cnt:
                     val = cnt
                     self.minimax_est = val
                     max_board = possible_pos[i]
-            print('max_min max board: ' + ''.join(x for x in max_board))
             return max_board
         elif depth == 0:
             self.pos_eval += 1
@@ -336,20 +329,14 @@ class MiniMaxGame:
             depth -= 1
             children = self.generateBlackMove(board)
 
-            '''print('Possible moves for white are:\n ')
-            for i in range(len(children)):
-                print(''.join(x for x in children[i]))'''
-
             val = float('inf')
             min_board = [None] * 50
             for i in range(len(children)):
                 max_board = self.max_min(children[i], depth)
-                print('min_max max board: ' + ''.join(x for x in max_board))
                 cnt = self.static_estm(max_board)
                 if val > cnt:
                     val = cnt
                     min_board = children[i]
-            print('min_max min board: ' + ''.join(x for x in min_board))
             return min_board
         elif depth == 0:
             self.pos_eval += 1
@@ -365,7 +352,6 @@ if __name__ == '__main__':
     with open(inputfile, 'r') as f1:
         s = f1.read()
         board = list(s)
-        print(len(board))
         obj = MiniMaxGame()
         new_moves = obj.max_min(board, depth)
         new_s = ''.join(i for i in new_moves)
@@ -374,4 +360,4 @@ if __name__ == '__main__':
         print('MiniMax evaluation: ' + str(obj.minimax_est))
 
         with open(outputFile, 'w') as f2:
-            f2.write('New board is: ' + new_s + '\n')
+            f2.write(new_s)

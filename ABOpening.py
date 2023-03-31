@@ -211,28 +211,6 @@ class ABOpening:
                 b_count += 1
         return w_count - b_count
 
-    def add_W(self, board):
-        temp_pos = {}
-
-        for i in range(len(board)):
-            score = 0
-            if board[i] == 'x':
-                temp = board.copy()
-                temp[i] = 'W'
-                score += self.closemill(i, temp)
-                score += self.neighbours(i, temp)
-
-                temp[i] = 'B'
-                score += self.closemill(i, temp)
-
-                temp[i] = 'W'
-                score += self.count(board)
-
-                new_s = ''.join(x for x in temp)
-                temp_pos[new_s] = score
-
-        return temp_pos
-
     def generateADD(self, board):
         pos = []
         for i in range(len(board)):
@@ -278,7 +256,6 @@ class ABOpening:
                     continue
                 if temp2[j] == 'B':
                     temp2[j] = 'W'
-            # print(temp)
             black_move_list.append(temp2)
         return black_move_list
 
@@ -287,10 +264,6 @@ class ABOpening:
         if depth > 0:
             depth -= 1
             possible_pos = self.generateADD(board)
-
-            '''print('Possible moves for white are:\n ')
-            for i in range(len(possible_pos)):
-                print(''.join(x for x in possible_pos[i]))'''
 
             val = float('-inf')
             max_board = [None] * 50
@@ -316,10 +289,6 @@ class ABOpening:
         if depth > 0:
             depth -= 1
             children = self.generateBlackMove(board)
-
-            '''print('Possible moves for white are:\n ')
-            for i in range(len(children)):
-                print(''.join(x for x in children[i]))'''
 
             val = float('inf')
             min_board = [None] * 50
@@ -350,7 +319,6 @@ if __name__ == '__main__':
     with open(inputfile, 'r') as f1:
         s = f1.read()
         board = list(s)
-        print(len(board))
         obj = ABOpening()
         new_moves = obj.max_min(board, depth, x, y)
         new_s = ''.join(i for i in new_moves)
@@ -359,7 +327,7 @@ if __name__ == '__main__':
         print('MiniMax evaluation: '+str(obj.minimax_est))
 
         with open(outputFile, 'w') as f2:
-            f2.write('New board is: '+new_s+'\n')
+            f2.write(new_s)
             # f2.write('Positions Evaluated: '+str(obj.pos_eval)+'\n')
             # f2.write('MiniMax evaluation: '+str(obj.minimax_est)+'\n')
 

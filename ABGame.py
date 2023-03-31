@@ -171,7 +171,7 @@ class ABGame:
 
         if loc == 17:
             # if board[16] == c or board[18] == c or board[14] == c or board[20] == c:  # 17
-            return [15, 18, 14, 20]
+            return [16, 18, 14, 20]
 
         if loc == 18:
             # if board[15] == c or board[17] == c or board[21] == c or board[11] == c:  # 18
@@ -237,7 +237,6 @@ class ABGame:
                     continue
                 if temp2[j] == 'B':
                     temp2[j] = 'W'
-            # print(temp)
             black_move_list.append(temp2)
         return black_move_list
 
@@ -309,10 +308,6 @@ class ABGame:
             depth -= 1
             possible_pos = self.midgame_moves(board)
 
-            '''rint('Possible moves for white are:\n ')
-            for i in range(len(possible_pos)):
-                print(''.join(x for x in possible_pos[i]))'''
-
             val = float('-inf')
             max_board = [None] * 50
             for i in range(len(possible_pos)):
@@ -335,20 +330,15 @@ class ABGame:
     def min_max(self, board, depth, a, b):
         if depth > 0:
             depth -= 1
-            '''print('Possible moves for white are:\n ')
-            for i in range(len(children)):
-                print(''.join(x for x in children[i]))'''
 
             val = float('inf')
             min_board = [''] * 50
             children = self.generateBlackMove(board)
             for i in range(len(children)):
                 max_board = self.max_min(children[i], depth, a, b)
-                # print('min_max max board: '+''.join(x for x in max_board))
                 cnt = self.static_estm(max_board)
                 if val > cnt:
                     val = cnt
-                    # self.minimax_est = val
                     min_board = children[i]
 
                 if val <= a:
@@ -372,16 +362,14 @@ if __name__ == '__main__':
     with open(inputfile, 'r') as f1:
         s = f1.read()
         board = list(s)
-        print(len(board))
         obj = ABGame()
         new_moves = obj.max_min(board, depth, x, y)
-        # print(obj.neighbours(19))
         new_s = ''.join(i for i in new_moves)
         print('New board is: ' + new_s)
         print('Positions Evaluated: ' + str(obj.pos_eval))
         print('MiniMax evaluation: ' + str(obj.minimax_est))
 
         with open(outputFile, 'w') as f2:
-            f2.write('New board is: ' + new_s + '\n')
+            f2.write(new_s)
             # f2.write('Positions Evaluated: '+str(obj.pos_eval)+'\n')
             # f2.write('MiniMax evaluation: '+str(obj.minimax_est)+'\n')
