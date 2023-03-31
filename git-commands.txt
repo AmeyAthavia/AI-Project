@@ -1,0 +1,8 @@
+Step 1:
+$ git add . ( add all changed files for commit)
+
+Step 2:
+$ git commit -m "Latest Commit" ( commit all files to remote repo)
+
+Step 3:
+$ git push origin main ( push all changes to remote repo)
