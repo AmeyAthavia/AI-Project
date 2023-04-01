@@ -330,6 +330,7 @@ if __name__ == '__main__':
         obj = MiniMaxOpening()
         new_moves = obj.max_min(board, depth)
         new_s = ''.join(i for i in new_moves)
+        print('Input board is: ' + s)
         print('New board is: '+new_s)
         print('Positions Evaluated: '+str(obj.pos_eval))
         print('MiniMax evaluation: '+str(obj.minimax_est))

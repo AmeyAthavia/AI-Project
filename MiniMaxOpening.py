@@ -270,7 +270,6 @@ class MiniMaxOpening:
             val = float('-inf')
             max_board = [None] * 50
             for i in range(len(possible_pos)):
-                print('Board')
                 min_board = self.min_max(possible_pos[i], depth)
                 cnt = self.count(min_board)
                 if val < cnt:
@@ -314,6 +313,7 @@ if __name__ == '__main__':
         obj = MiniMaxOpening()
         new_moves = obj.max_min(board, depth)
         new_s = ''.join(i for i in new_moves)
+        print('Input board is: ' + s)
         print('New board is: '+new_s)
         print('Positions Evaluated: '+str(obj.pos_eval))
         print('MiniMax evaluation: '+str(obj.minimax_est))

@@ -314,6 +314,7 @@ if __name__ == '__main__':
         new_moves = obj.max_min(brd, depth)
         new_moves = obj.swapping(new_moves)
         new_s = ''.join(i for i in new_moves)
+        print('Input board is: ' + s)
         print('New board is: '+new_s)
         print('Positions Evaluated: '+str(obj.pos_eval))
         print('MiniMax evaluation: '+str(obj.minimax_est))
